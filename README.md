@@ -1,7 +1,8 @@
 # bookstore
 some advanced django stuff to practice
 
-made step by step after William S. Vincent's 'Django for professionals'
+made step by step after William S. Vincent's 'Django for professionals'.
+I use his updated version as a template
 
 TODO:
 1. Google auth
