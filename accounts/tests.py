@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from django.urls import reverse, resolve  
+from django.urls import reverse, resolve
 
 
 class CustomUserTests(TestCase):
@@ -27,7 +27,7 @@ class CustomUserTests(TestCase):
         self.assertTrue(admin_user.is_superuser)
 
 
-class SignupPageTests(TestCase):  # new
+class SignupPageTests(TestCase):
     username = "newuser"
     email = "newuser@email.com"
 
