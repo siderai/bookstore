@@ -4,14 +4,18 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    # Django admin
+    # templates
     path("anything-but-admin/", admin.site.urls),
-    # User management
     path("accounts/", include("allauth.urls")),
-    # Local apps
     path("", include("pages.urls")),
     path("books/", include("books.urls")),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # api
+    path("api/v1", include("api.urls")),
+    path("api-auth/", include("rest_framework.urls")),
+    path("api/v1/rest-auth/", include("rest_auth.urls")),
+]
+# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 if settings.DEBUG:
     import debug_toolbar

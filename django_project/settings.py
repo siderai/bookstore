@@ -27,19 +27,23 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "whitenoise.runserver_nostatic",
+    # "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "django.contrib.sites",
     # Third-party
+    "rest_framework",
+    "rest_framework.authtoken",
+    "rest_auth",
     "crispy_forms",
     "crispy_bootstrap5",
     "allauth",
     "allauth.account",
     "debug_toolbar",
     # Local
-    "accounts.apps.AccountsConfig",
-    "pages.apps.PagesConfig",
-    "books.apps.BooksConfig",
+    "accounts",
+    "pages",
+    "books",
+    "api",
 ]
 
 MIDDLEWARE = [
@@ -55,6 +59,18 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
 ]
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+}
+
 
 ROOT_URLCONF = "django_project.urls"
 
