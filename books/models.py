@@ -8,10 +8,16 @@ class Book(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=200)
+    isbn = models.CharField(max_length=13)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     cover = models.ImageField(upload_to="covers/", blank=True)
+    pages = models.IntegerField()
+    quantity = models.IntegerField()
+    description = models.TextField()
+    created_at = models.DateField(auto_now_add=True)
 
     class Meta:
+        ordering = ["-created_at"]
         indexes = [
             models.Index(fields=["id"], name="id_index"),
         ]
@@ -24,6 +30,17 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse("book_detail", args=[str(self.id)])
+
+
+class Category(models.Model):
+    title = models.CharField(max_length=200)
+    books = models.ManyToManyField(Book)
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
+    def __str__(self):
+        return self.title
 
 
 class Review(models.Model):
