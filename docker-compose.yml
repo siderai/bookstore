@@ -1,12 +1,11 @@
-# for production:
-# command: gunicorn django_project.wsgi -b 0.0.0.0:8000
-
 version: '3.9'
-X
+
 services:
   web:
     build: .
     command: python3 /code/manage.py runserver 0.0.0.0:8000
+    # for production:
+    # command: gunicorn django_project.wsgi -b 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
@@ -25,7 +24,7 @@ services:
     links:
       - db:db
     networks:
-      network:
+      default:
 
   db:
     restart: always
@@ -33,13 +32,22 @@ services:
     environment:
       POSTGRES_HOST_AUTH_METHOD: 'trust'
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/postgresdata
     ports:
       - 5433:5433
     networks:
-      network:
+      default:
+
+  redis:
+    image: redis:latest
+    volumes:
+      - cache:/data
+    ports:
+      - 6379:6379
+
 
 volumes:
   postgres_data:
+  cache:
 networks:
-  network:
+  default:

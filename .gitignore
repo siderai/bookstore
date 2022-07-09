@@ -56,3 +56,5 @@ venv/
 env.bak/
 venv.bak/
 db.sqlite3
+static/
+staticfiles/

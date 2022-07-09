@@ -33,11 +33,12 @@ INSTALLED_APPS = [
     # Third-party
     "rest_framework",
     "rest_framework.authtoken",
-    "rest_auth",
     "crispy_forms",
     "crispy_bootstrap5",
     "allauth",
     "allauth.account",
+    "rest_auth",
+    "rest_auth.registration",
     "debug_toolbar",
     # Local
     "accounts",
@@ -47,7 +48,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "django.middleware.cache.UpdateCacheMiddleware",
+    # "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -57,7 +58,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    "django.middleware.cache.FetchFromCacheMiddleware",
+    # "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
 
@@ -73,7 +74,15 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 15,
 }
 
-ROOT_URLCONF = "django_project.urls"
+
+CACHE_TTL = 60 * 15
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/",
+        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+    }
+}
 
 TEMPLATES = [
     {
@@ -90,6 +99,8 @@ TEMPLATES = [
         },
     },
 ]
+
+ROOT_URLCONF = "django_project.urls"
 
 WSGI_APPLICATION = "django_project.wsgi.application"
 
@@ -171,17 +182,13 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 
-DEFAULT_FROM_EMAIL = "admin@djangobookstore.com"
+DEFAULT_FROM_EMAIL = "admin@siderai-bookstore.herokuapp.com/"
 
 # django-debug-toolbar
 import socket
 
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
-
-CACHE_MIDDLEWARE_ALIAS = "default"
-CACHE_MIDDLEWARE_SECONDS = 604800
-CACHE_MIDDLEWARE_KEY_PREFIX = ""
 
 SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
 SECURE_HSTS_SECONDS = env.int("DJANGO_SECURE_HSTS_SECONDS", default=2592000)  # 30 days
