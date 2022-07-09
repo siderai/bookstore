@@ -12,7 +12,7 @@ from .models import Book
 CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
 
 
-@method_decorator(cache_page(CACHE_TTL), name="get")
+@method_decorator(cache_page(CACHE_TTL), name="dispatch")
 class BookListView(LoginRequiredMixin, ListView):
     model = Book
     context_object_name = "book_list"
@@ -20,7 +20,7 @@ class BookListView(LoginRequiredMixin, ListView):
     login_url = "account_login"
 
 
-@method_decorator(cache_page(CACHE_TTL), name="get")
+@method_decorator(cache_page(CACHE_TTL), name="dispatch")
 class BookDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Book
     context_object_name = "book"
@@ -32,7 +32,7 @@ class BookDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     )
 
 
-@method_decorator(cache_page(CACHE_TTL), name="get")
+@method_decorator(cache_page(CACHE_TTL), name="dispatch")
 class SearchResultsListView(ListView):
     model = Book
     context_object_name = "book_list"
