@@ -9,12 +9,11 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("", include("pages.urls")),
     path("books/", include("books.urls")),
-    # api
-    path("api/v1", include("api.urls")),
+    # api endpoints
+    path("api/v1/", include("api.urls")),
     path("api-auth/", include("rest_framework.urls")),
-    path("api/v1/rest-auth/", include("rest_auth.urls")),
-]
-# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # path("api/v1/rest-auth/", include("rest_auth.urls")),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 if settings.DEBUG:

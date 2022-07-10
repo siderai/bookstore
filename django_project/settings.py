@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "allauth",
     "allauth.account",
-    "rest_auth",
-    "rest_auth.registration",
+    # "rest_auth",
+    # "rest_auth.registration",
     "debug_toolbar",
     # Local
     "accounts",
@@ -75,14 +75,14 @@ REST_FRAMEWORK = {
 }
 
 
-CACHE_TTL = 60 * 15
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/",
-        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
-    }
-}
+# CACHE_TTL = 60 * 15
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:6379/",
+#         "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+#     }
+# }
 
 TEMPLATES = [
     {
@@ -185,7 +185,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 DEFAULT_FROM_EMAIL = "admin@siderai-bookstore.herokuapp.com/"
 
 # django-debug-toolbar
-import socket
+import socket  # noqa
 
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
