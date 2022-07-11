@@ -1,6 +1,13 @@
 # bookstore
 
-I use this training app as template for practicing some advanced stuff
+Implemented features: 
+- Token authentication
+- Custom registration with confirmation via email
+- Users and books CRUD
+- Db requests caching
+- Containerization (App + pgSQL + Redis)
+- Full test coverage (TDD)
+- Bootstrap as frontend
 
 TODO:
 1. Google auth (via django-allauth)
