@@ -1,0 +1,34 @@
+name: Bookstore CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: |
+        docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Run containers
+      run: |
+        docker-compose up -d
+    - name: Lint with flake8
+      run: |
+        docker-compose exec web make lint
+    - name: Test with Pytest
+      run: |
+        docker-compose exec web make test
+    - name: Test coverage and send result to CodeClimate
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.TEST_REPORTER_ID }}
+      run: |
+        docker-compose exec web curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        docker-compose exec web chmod +x ./cc-test-reporter
+        docker-compose exec web ./cc-test-reporter before-build
+        docker-compose exec web make test-coverage
+        docker-compose exec web ./cc-test-reporter after-build
